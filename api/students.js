@@ -17,3 +17,14 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch student" });
   }
 });
+
+router.get('/students', async (req, res) => {
+  try{
+    const students = await Student.findAll();
+    res.json(students);
+  }catch (error) {
+    res.status(500).json({ error: "Failed to fetch students"});
+  }
+});
+
+module.exports = router;

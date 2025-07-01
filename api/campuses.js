@@ -19,3 +19,14 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get('/campuses', async (req, res) => {
+  try{
+    const campuses = await Campus.findAll();
+    res.json(campuses);
+  }catch (error) {
+    res.status(500).json({ error: "Failed to fetch campuses"});
+  }
+});
+
+module.exports = router;
+
