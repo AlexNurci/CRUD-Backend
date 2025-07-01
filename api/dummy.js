@@ -27,7 +27,7 @@ const { Student, Campus } = require("../database");
 
 router.get("/:id", async (req, res) => {
   try {
-    const campus = await campus.findByPk(req.params.id, {
+    const student = await campus.findByPk(req.params.id, {
       include: Campus,
     });
 
