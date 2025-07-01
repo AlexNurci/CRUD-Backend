@@ -1,19 +1,29 @@
-const db = require("./db");
-const { Duck } = require("./index");
+const { db, Campus, Student } = require('./index');
 
 const seed = async () => {
-  db.logging = false;
-  await db.sync({ force: true }); // Drop and recreate tables
-  const ducks = await Duck.bulkCreate([
-    { name: "James Pond" },
-    { name: "Quakie Chan" },
-    { name: "Goose" },
-  ]);
+  try {
+    await db.sync({ force: true }); // Drops all tables and recreates them
 
-  console.log(`🦆 Created ${ducks.length} ducks`);
+    const campus1 = await Campus.create({
+      name: 'Tech Valley University',
+      address: '456 Dev Lane, Brooklyn, NY',
+      description: 'We build fullstack minds.',
+    });
 
-  console.log("🌱 Seeded the database");
-  db.close();
+    await Student.create({
+      firstName: 'Benjamin',
+      lastName: 'Ayala',
+      email: 'benjamin@example.com',
+      gpa: 3.9,
+      CampusId: campus1.id,
+    });
+
+    console.log('Seeded the database successfully!');
+    process.exit(0);
+  } catch (err) {
+    console.error('Error while seeding:', err);
+    process.exit(1);
+  }
 };
 
-seed();
+seed(); 
