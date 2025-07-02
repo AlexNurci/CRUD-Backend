@@ -50,4 +50,21 @@ router.post("/", async (req, res) => {
   }
 });
 
+//Delete student by ID
+router.delete("/:id", async (req, res) => {
+  try {
+    const student = await Student.findByPk(req.params.id);
+
+    if (!student) {
+      return res.status(404).json({ error: "Student not found" });
+    }
+
+    await student.destroy(); // Remove the student from the database
+    res.json({ message: "Student deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete student" });
+  }
+});
+
+
 module.exports = router;
