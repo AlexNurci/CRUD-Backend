@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const { Campus, Student } = require("../database");
 
-//campus
+// GET /api/campuses/:id - Get campus by ID including students
 router.get("/:id", async (req, res) => {
   try {
-    const campus = await campus.findByPk(req.params.id, {
+    const campus = await Campus.findByPk(req.params.id, {
       include: Student,
     });
 
@@ -19,14 +19,33 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get('/campuses', async (req, res) => {
-  try{
+// GET /api/campuses - Get all campuses
+router.get("/", async (req, res) => {
+  try {
     const campuses = await Campus.findAll();
     res.json(campuses);
-  }catch (error) {
-    res.status(500).json({ error: "Failed to fetch campuses"});
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch campuses" });
+  }
+});
+
+// POST /api/campuses - Create a new campus
+router.post("/", async (req, res) => {
+  try {
+    const { name, address, imageUrl, description } = req.body;
+
+    const newCampus = await Campus.create({
+      name,
+      address,
+      imageUrl,
+      description,
+    });
+
+    res.status(201).json(newCampus);
+  } catch (error) {
+    console.error("Error creating campus:", error);
+    res.status(500).json({ error: "Failed to create campus" });
   }
 });
 
 module.exports = router;
-
