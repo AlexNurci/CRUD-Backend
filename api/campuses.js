@@ -48,5 +48,22 @@ router.post("/", async (req, res) => {
   }
 });
 
+// DELETE /api/campuses/:id - Delete campus by ID
+router.delete("/:id", async (req, res) => {
+  try {
+    const campus = await Campus.findByPk(req.params.id);
+
+    if (!campus) {
+      return res.status(404).json({ error: "Campus not found" });
+    }
+
+    await campus.destroy(); // Remove the campus from the database
+    res.json({ message: "Campus deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete campus" });
+  }
+});
+
+
 
 module.exports = router;
