@@ -52,6 +52,7 @@ router.post("/", async (req, res) => {
 
 //Delete student by ID
 router.delete("/:id", async (req, res) => {
+  console.log("DELETE /api/students/:id", req.params.id); 
   try {
     const student = await Student.findByPk(req.params.id);
 
