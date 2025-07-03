@@ -2,11 +2,11 @@ const { DataTypes } = require('sequelize');
 const db = require('./db');
 
 const Campus = db.define('Campus', {
-  name: {
+  campusName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  imageUrl: {
+  image: {
     type: DataTypes.STRING,
     defaultValue: 'https://via.placeholder.com/150',
   },
@@ -17,6 +17,9 @@ const Campus = db.define('Campus', {
   description: {
     type: DataTypes.TEXT,
   },
+  students: {
+    type: DataTypes.STRING,
+  }
 });
 
 module.exports = Campus;

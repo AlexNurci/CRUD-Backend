@@ -8,6 +8,8 @@ const seed = async () => {
       name: 'Tech Valley University',
       address: '456 Dev Lane, Brooklyn, NY',
       description: 'We build fullstack minds.',
+      image: "URL",
+      students: "25",
     });
 
     await Student.create({
