@@ -32,13 +32,14 @@ router.get("/", async (req, res) => {
 // POST /api/campuses - Create a new campus
 router.post("/", async (req, res) => {
   try {
-    const { name, address, imageUrl, description } = req.body;
-
+    const { campusName, address, image, description, students } = req.body;
+    console.log(req.body);
     const newCampus = await Campus.create({
-      name,
-      address,
-      imageUrl,
-      description,
+        campusName,
+        address,
+        students,
+        image,
+        description,
     });
 
     res.status(201).json(newCampus);
