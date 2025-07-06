@@ -32,7 +32,11 @@ router.get("/", async (req, res) => {
 // create a new student
 router.post("/", async (req, res) => {
   try {
-    const { firstName, lastName, email, imageUrl, gpa, campusId } = req.body;
+    // Destructure from req.body
+    let { firstName, lastName, email, imageUrl, gpa, CampusId } = req.body;
+
+    // Optionally: parse CampusId if it's coming as a string
+    CampusId = parseFloat(CampusId);
 
     const newStudent = await Student.create({
       firstName,
@@ -40,7 +44,7 @@ router.post("/", async (req, res) => {
       email,
       imageUrl,
       gpa,
-      CampusId: campusId, 
+      CampusId,
     });
 
     res.status(201).json(newStudent);
@@ -50,6 +54,23 @@ router.post("/", async (req, res) => {
   }
 });
 
+<<<<<<< Updated upstream
+=======
+
+//PUT, edit an existing student
+router.put("/:id", async (req, res, next) => {
+  try {
+    const student = await Student.findByPk(req.params.id);
+    if (!student) return res.status(404).send("Student not found");
+
+    await student.update(req.body);
+    res.json(student);
+  } catch (err) {
+    next(err);
+  }
+});
+
+>>>>>>> Stashed changes
 //Delete student by ID
 router.delete("/:id", async (req, res) => {
   console.log("DELETE /api/students/:id", req.params.id); 
