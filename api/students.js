@@ -54,9 +54,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-<<<<<<< Updated upstream
-=======
-
 //PUT, edit an existing student
 router.put("/:id", async (req, res, next) => {
   try {
@@ -70,7 +67,6 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
->>>>>>> Stashed changes
 //Delete student by ID
 router.delete("/:id", async (req, res) => {
   console.log("DELETE /api/students/:id", req.params.id); 
