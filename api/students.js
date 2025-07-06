@@ -50,6 +50,19 @@ router.post("/", async (req, res) => {
   }
 });
 
+//PUT, edit an existing student
+router.put("/:id", async (req, res, next) => {
+  try {
+    const student = await Student.findByPk(req.params.id);
+    if (!student) return res.status(404).send("Student not found");
+
+    await student.update(req.body);
+    res.json(student);
+  } catch (err) {
+    next(err);
+  }
+});
+
 //Delete student by ID
 router.delete("/:id", async (req, res) => {
   try {

@@ -49,6 +49,20 @@ router.post("/", async (req, res) => {
   }
 });
 
+
+//PUT, edit an existing campus
+router.put("/:id", async (req, res, next) => {
+  try {
+    const campus = await Campus.findByPk(req.params.id);
+    if (!campus) return res.status(404).send("Campus not found");
+
+    await campus.update(req.body);
+    res.json(campus);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // Delete campus by ID
 router.delete("/:id", async (req, res) => {
   try {
