@@ -22,7 +22,9 @@ router.get("/:id", async (req, res) => {
 // GET all students
 router.get("/", async (req, res) => {
   try {
-    const students = await Student.findAll();
+    const students = await Student.findAll({
+      include: Campus, 
+    });
     res.json(students);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch students" });
@@ -47,6 +49,8 @@ router.post("/", async (req, res) => {
       CampusId,
     });
 
+     console.log("New student created:", newStudent.id);
+
     res.status(201).json(newStudent);
   } catch (error) {
     console.error("Error creating student:", error);
@@ -69,7 +73,7 @@ router.put("/:id", async (req, res, next) => {
 
 //Delete student by ID
 router.delete("/:id", async (req, res) => {
-  console.log("DELETE /api/students/:id", req.params.id); 
+  console.log("DELETE /api/students/:id", req.params.id);
   try {
     const student = await Student.findByPk(req.params.id);
 
