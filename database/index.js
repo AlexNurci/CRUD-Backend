@@ -2,8 +2,8 @@ const db = require('./db');
 const Campus = require('./campus');
 const Student = require('./student');
 
-Campus.hasMany(Student);
-Student.belongsTo(Campus);
+Student.belongsTo(Campus, { foreignKey: 'CampusId' }); // not sure if needed
+Campus.hasMany(Student, { foreignKey: 'CampusId' });
 
 module.exports = {
   db,

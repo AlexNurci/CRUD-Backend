@@ -8,7 +8,8 @@ const { db } = require("./database");
 const cors = require("cors");
 
 const PORT = process.env.PORT || 8080;
-
+//console log
+console.log('Database URL:', process.env.DATABASE_URL);
 // body parser middleware
 app.use(express.json());
 

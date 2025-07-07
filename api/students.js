@@ -22,7 +22,9 @@ router.get("/:id", async (req, res) => {
 // GET all students
 router.get("/", async (req, res) => {
   try {
-    const students = await Student.findAll();
+    const students = await Student.findAll({
+      include: Campus, 
+    });
     res.json(students);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch students" });
@@ -32,7 +34,11 @@ router.get("/", async (req, res) => {
 // create a new student
 router.post("/", async (req, res) => {
   try {
-    const { firstName, lastName, email, imageUrl, gpa, campusId } = req.body;
+    // Destructure from req.body
+    let { firstName, lastName, email, imageUrl, gpa, CampusId } = req.body;
+
+    // Optionally: parse CampusId if it's coming as a string
+    CampusId = parseFloat(CampusId);
 
     const newStudent = await Student.create({
       firstName,
@@ -40,8 +46,10 @@ router.post("/", async (req, res) => {
       email,
       imageUrl,
       gpa,
-      CampusId: campusId, 
+      CampusId,
     });
+
+     console.log("New student created:", newStudent.id);
 
     res.status(201).json(newStudent);
   } catch (error) {
@@ -65,6 +73,7 @@ router.put("/:id", async (req, res, next) => {
 
 //Delete student by ID
 router.delete("/:id", async (req, res) => {
+  console.log("DELETE /api/students/:id", req.params.id);
   try {
     const student = await Student.findByPk(req.params.id);
 
